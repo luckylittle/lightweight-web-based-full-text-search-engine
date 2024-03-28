@@ -1,0 +1,34 @@
+<!-- index.html -->
+<!-- author: lmaly@redhat.com -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search</title>
+</head>
+<body>
+  <input type="text" id="searchInput" placeholder="Search...">
+  <ul id="results"></ul>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const resultsList = document.getElementById('results');
+
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.trim();
+      fetch(`/search?q=${query}`)
+        .then(response => response.json())
+        .then(data => {
+          resultsList.innerHTML = '';
+          data.forEach(result => {
+            const listItem = document.createElement('li');
+            listItem.textContent = result;
+            resultsList.appendChild(listItem);
+          });
+        })
+        .catch(error => console.error('Error fetching search results:', error));
+    });
+  </script>
+</body>
+</html>
