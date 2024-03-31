@@ -1,0 +1,8 @@
+FROM arm32v7/node
+MAINTAINER lmaly@redhat.com
+RUN mkdir /usr/app
+WORKDIR /usr/app
+COPY index.html server.js package.json data.txt /usr/app
+RUN cd /usr/app && npm install --no-package-lock
+EXPOSE 3000
+CMD ["node", "/usr/app/server.js"]
